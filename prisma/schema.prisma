@@ -1,0 +1,48 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String    @id @default(cuid())
+  email     String    @unique
+  password  String?   // Optional for OAuth users
+  name      String?
+  phone     String?   // Nigerian format +234
+  image     String?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  apartments Apartment[]
+}
+
+model Apartment {
+  id          String   @id @default(cuid())
+  title       String
+  description String   // SQLite doesn't need @db.Text
+  price       Float    // Price in Nigerian Naira (₦)
+  address     String
+  city        String   // Nigerian city
+  state       String   // Nigerian state
+  latitude    Float?
+  longitude   Float?
+  images      String   // JSON string for SQLite (store as comma-separated or JSON)
+  bedrooms    Int
+  bathrooms   Int
+  amenities   String   // JSON string for SQLite (store as comma-separated or JSON)
+  ownerId     String
+  owner       User     @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([city])
+  @@index([state])
+  @@index([latitude, longitude])
+}
+
