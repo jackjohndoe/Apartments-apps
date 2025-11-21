@@ -3,6 +3,9 @@ import { prisma } from "@/lib/prisma"
 import { getServerSession } from "next-auth"
 import { authOptions } from "@/lib/auth"
 
+// Ensure this apartments collection API route is always treated as dynamic
+export const dynamic = "force-dynamic"
+
 export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url)
