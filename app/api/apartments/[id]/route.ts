@@ -1,6 +1,9 @@
 import { NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
 
+// Ensure this API route is always treated as dynamic during build/deploy
+export const dynamic = "force-dynamic"
+
 // Sample apartments data
 const sampleApartments: Record<string, any> = {
   "sample-1": {
