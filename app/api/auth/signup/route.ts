@@ -2,6 +2,9 @@ import { NextResponse } from "next/server"
 import { prisma } from "@/lib/prisma"
 import bcrypt from "bcryptjs"
 
+// Always treat signup API as dynamic
+export const dynamic = "force-dynamic"
+
 export async function POST(request: Request) {
   try {
     const body = await request.json()
